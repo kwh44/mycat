@@ -7,7 +7,6 @@
 
 #include <string>
 #include <cstring>
-#include <algorithm>
 
 void print_error(int);
 
@@ -44,9 +43,8 @@ std::string hex(unsigned n) {
         n /= 16;
         ++i;
     }
-    hex_code[2]='x';
-    hex_code[3]='\\';
-    std::reverse(hex_code.begin(), hex_code.end());
+    hex_code[2] = 'x';
+    hex_code[3] = '\\';
     return hex_code;
 }
 
@@ -55,7 +53,7 @@ insert(char *buffer, const size_t &size, const size_t &capacity, std::string &&m
        const size_t &insert_index) {
     auto stride = message_to_insert.size() - 1;
     if (insert_index < size) for (auto i = size - 1; i > insert_index; --i) buffer[i + stride] = buffer[i];
-    for (size_t i = 0; i <= stride; ++i) buffer[insert_index + i] = message_to_insert[i];
+    for (size_t i = 0; i <= stride; ++i) buffer[insert_index + i] = message_to_insert[stride - i];
 
 }
 
