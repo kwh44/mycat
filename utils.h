@@ -27,7 +27,6 @@ void write_to_stdout(char *buffer, size_t size) {
     }
 }
 
-
 void print_error(int error_code) {
     char *message = strerror(error_code);
     write_to_stdout(message, strlen(message));
