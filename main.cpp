@@ -37,9 +37,9 @@ void open_files(const std::vector<std::string> &filenames, std::vector<int> &fd_
 }
 
 void read_files(const std::vector<int> &fd_list, const bool &special_mode) {
-    constexpr size_t buffer_capacity = 16384;
-    constexpr size_t buffer_size = 4096;
-    char buffer[buffer_size];
+    constexpr size_t buffer_capacity = 400;
+    constexpr size_t buffer_size = 100;
+    char buffer[buffer_capacity];
     for (const auto &v: fd_list) {
         ssize_t bytes_read = 666; // just random value to start the while loop
         while (bytes_read > 0) {
@@ -54,12 +54,16 @@ void read_files(const std::vector<int> &fd_list, const bool &special_mode) {
                 }
             } else {
                 if (special_mode) {
-                    for (size_t i = 0; i < bytes_read; ++i) {
+                    for (size_t i = 0; i < bytes_read;) {
                         if (!(isspace(buffer[i]) || isprint(buffer[i]))) {
-                            insert(buffer, buffer_size, buffer_capacity, hex(buffer[i]), i);
-                        }
+                            // TODO Insert routine has bug
+                            insert(buffer, bytes_read, buffer_capacity, hex(buffer[i]), i);
+                            i += 4;
+                            bytes_read += 3;
+                        } else ++i;
                     }
                 }
+
                 write_to_stdout(buffer, bytes_read);
             }
         }
