@@ -56,14 +56,12 @@ void read_files(const std::vector<int> &fd_list, const bool &special_mode) {
                 if (special_mode) {
                     for (size_t i = 0; i < bytes_read;) {
                         if (!(isspace(buffer[i]) || isprint(buffer[i]))) {
-                            // TODO Insert routine has bug
                             insert(buffer, bytes_read, buffer_capacity, hex(buffer[i]), i);
                             i += 4;
                             bytes_read += 3;
                         } else ++i;
                     }
                 }
-
                 write_to_stdout(buffer, bytes_read);
             }
         }
